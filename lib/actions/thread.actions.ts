@@ -70,3 +70,39 @@ export async function fetchPosts(pageNumer = 1, pageSize = 20) {
     throw new Error(`Faild to fetch posts: ${error.message}`);
   }
 }
+
+export async function fetchThreadById(id: string) {
+  connectToDatabase();
+
+  try {
+    const thread = await Thread.findById(id)
+      .populate({
+        path: 'author',
+        model: User,
+        select: '_id name id image',
+      })
+      .populate({
+        path: 'children',
+        populate: [
+          {
+            path: 'author',
+            model: User,
+            select: '_id name parentId image',
+          },
+          {
+            path: 'children',
+            model: Thread,
+            populate: {
+              path: 'author',
+              model: User,
+              select: '_id id name parentId image',
+            },
+          },
+        ],
+      })
+      .exec();
+    return thread;
+  } catch (error: any) {
+    throw new Error(`Faild to fetch thread: ${error.message}`);
+  }
+}

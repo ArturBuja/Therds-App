@@ -106,3 +106,5 @@ export async function fetchThreadById(id: string) {
     throw new Error(`Faild to fetch thread: ${error.message}`);
   }
 }
+
+export async function addCommentToThread(id: string) {}

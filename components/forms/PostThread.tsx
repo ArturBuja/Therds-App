@@ -15,7 +15,6 @@ import {
 
 import { Button } from '../ui/button';
 
-import { updateUser } from '@/lib/actions/user.actions';
 import { useRouter, usePathname } from 'next/navigation';
 import { createThread } from '@/lib/actions/thread.actions';
 

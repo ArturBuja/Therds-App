@@ -12,6 +12,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { useOrganization } from '@clerk/nextjs';
 
 import { Button } from '../ui/button';
 
@@ -33,6 +34,7 @@ interface Props {
 const PostThread = ({ userId }: { userId: string }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { organization } = useOrganization();
 
   const form = useForm({
     resolver: zodResolver(ThreadValidation),
@@ -46,7 +48,7 @@ const PostThread = ({ userId }: { userId: string }) => {
       text: values.thread,
       path: pathname,
       author: userId,
-      communityId: null,
+      communityId: organization ? organization.id : null,
     });
 
     router.push('/');

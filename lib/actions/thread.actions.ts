@@ -107,4 +107,42 @@ export async function fetchThreadById(id: string) {
   }
 }
 
-export async function addCommentToThread(id: string) {}
+interface IProps {
+  threadId: string;
+  commentText: string;
+  userId: string;
+  path: string;
+}
+
+export async function addCommentToThread({
+  threadId,
+  commentText,
+  userId,
+  path,
+}: IProps) {
+  connectToDatabase();
+  try {
+    //Find the original thread
+    const origralThread = await Thread.findById(threadId);
+    if (!origralThread) {
+      throw new Error('Thread not found');
+    }
+
+    //Create a new thread with the comment text
+    const commentThread = new Thread({
+      text: commentText,
+      author: userId,
+      parentId: threadId,
+    });
+    //Save the new Thread
+    const savedCommentthread = await commentThread.save();
+    // Update theoriginal thread to include to the new comment
+    origralThread.children.push(savedCommentthread._id);
+    //Save the originalthread
+    await origralThread.save();
+
+    revalidatePath(path);
+  } catch (error: any) {
+    throw new Error(`Faild to add comment to thread: ${error.message}`);
+  }
+}

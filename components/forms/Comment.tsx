@@ -17,7 +17,7 @@ import {
 import { Button } from '../ui/button';
 
 import { useRouter, usePathname } from 'next/navigation';
-import { createThread } from '@/lib/actions/thread.actions';
+import { addCommentToThread, createThread } from '@/lib/actions/thread.actions';
 import Image from 'next/image';
 
 interface IProps {
@@ -37,14 +37,14 @@ const Comment = ({ threadId, currentUserImg, currentUserId }: IProps) => {
     },
   });
   const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
-    // await createThread({
-    //   text: values.thread,
-    //   path: pathname,
-    //   author: userId,
-    //   communityId: null,
-    // });
+    await addCommentToThread({
+      threadId,
+      commentText: values.thread,
+      userId: JSON.parse(currentUserId),
+      path: pathname,
+    });
 
-    router.push('/');
+    form.reset();
   };
 
   return (

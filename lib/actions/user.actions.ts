@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import User from '../models/user.model';
 import { connectToDatabase } from '../mongoose';
+import Thread from '../models/thread.model';
 
 interface IParams {
   userId: string;
@@ -54,5 +55,29 @@ export async function fetchUser(userid: string) {
     // });
   } catch (error: any) {
     throw new Error(`Failed to fetch user: ${error.message}`);
+  }
+}
+
+export async function fechtUserPosts(userId: string) {
+  try {
+    connectToDatabase();
+
+    // find all threads for user with the gicen userId
+    const threads = await User.findOne({ id: userId }).populate({
+      path: 'threads',
+      model: Thread,
+      populate: {
+        path: 'children',
+        model: Thread,
+        populate: {
+          path: 'author',
+          model: User,
+          select: 'name image id',
+        },
+      },
+    });
+    return threads;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user posts: ${error.message}`);
   }
 }

@@ -1,4 +1,4 @@
-import { fechtUserPosts } from '@/lib/actions/user.actions';
+import { fetchUserPosts } from '@/lib/actions/user.actions';
 import { redirect } from 'next/navigation';
 import React from 'react';
 import ThreadCard from '../cards/ThreadCard';
@@ -19,7 +19,7 @@ const ThreadsTab = async ({
   if (accountType === 'Community') {
     result = await fetchCommunityPosts(accountId);
   } else {
-    result = await fechtUserPosts(accountId);
+    result = await fetchUserPosts(accountId);
   }
 
   if (!result) redirect('/');

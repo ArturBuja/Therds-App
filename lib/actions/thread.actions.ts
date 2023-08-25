@@ -203,13 +203,18 @@ export async function fetchThreadById(threadId: string) {
     throw new Error("Unable to fetch thread");
   }
 }
-
-export async function addCommentToThread(
-  threadId: string,
-  commentText: string,
-  userId: string,
-  path: string
-) {
+interface IProps {
+  threadId: string;
+  commentText: string;
+  userId: string;
+  path: string;
+}
+export async function addCommentToThread({
+  threadId,
+  commentText,
+  userId,
+  path,
+}: IProps) {
   connectToDatabase();
 
   try {

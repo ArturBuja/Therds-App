@@ -1,9 +1,9 @@
-'use client';
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ThreadValidation } from '@/lib/validations/thread';
-import { Textarea } from '@/components/ui/textarea';
+"use client";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ThreadValidation } from "@/lib/validations/thread";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
   FormControl,
@@ -11,13 +11,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { useOrganization } from '@clerk/nextjs';
+} from "@/components/ui/form";
+import { useOrganization } from "@clerk/nextjs";
 
-import { Button } from '../ui/button';
+import { Button } from "../ui/button";
 
-import { useRouter, usePathname } from 'next/navigation';
-import { createThread } from '@/lib/actions/thread.actions';
+import { useRouter, usePathname } from "next/navigation";
+import { createThread } from "@/lib/actions/thread.actions";
 
 interface Props {
   user: {
@@ -39,7 +39,7 @@ const PostThread = ({ userId }: { userId: string }) => {
   const form = useForm({
     resolver: zodResolver(ThreadValidation),
     defaultValues: {
-      thread: '',
+      thread: "",
       accountId: userId,
     },
   });
@@ -51,31 +51,31 @@ const PostThread = ({ userId }: { userId: string }) => {
       communityId: organization ? organization.id : null,
     });
 
-    router.push('/');
+    router.push("/");
   };
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='mt-10 flex flex-col justify-start gap-10'
+        className="mt-10 flex flex-col justify-start gap-10"
       >
         <FormField
           control={form.control}
-          name='thread'
+          name="thread"
           render={({ field }) => (
-            <FormItem className='flex gap-3 flex-col w-full'>
-              <FormLabel className='text-base-semibold text-light-2'>
+            <FormItem className="flex gap-3 flex-col w-full">
+              <FormLabel className="text-base-semibold text-light-2">
                 Content
               </FormLabel>
-              <FormControl className='no-focus border border-dark-4 bg-dark-3 text-light-1'>
+              <FormControl className="no-focus border border-dark-4 bg-dark-3 text-light-1">
                 <Textarea rows={15} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type='submit' className='bg-primary-500'>
+        <Button type="submit" className="bg-primary-500">
           Post Thread
         </Button>
       </form>

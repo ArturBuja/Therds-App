@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CommentValidation } from '@/lib/validations/thread';
-import { Input } from '@/components/ui/input';
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CommentValidation } from "@/lib/validations/thread";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -12,13 +12,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from "@/components/ui/form";
 
-import { Button } from '../ui/button';
+import { Button } from "../ui/button";
 
-import { useRouter, usePathname } from 'next/navigation';
-import { addCommentToThread, createThread } from '@/lib/actions/thread.actions';
-import Image from 'next/image';
+import { useRouter, usePathname } from "next/navigation";
+import { addCommentToThread, createThread } from "@/lib/actions/thread.actions";
+import Image from "next/image";
 
 interface IProps {
   threadId: string;
@@ -33,7 +33,7 @@ const Comment = ({ threadId, currentUserImg, currentUserId }: IProps) => {
   const form = useForm({
     resolver: zodResolver(CommentValidation),
     defaultValues: {
-      thread: '',
+      thread: "",
     },
   });
   const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
@@ -49,33 +49,33 @@ const Comment = ({ threadId, currentUserImg, currentUserId }: IProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='comment-form'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="comment-form">
         <FormField
           control={form.control}
-          name='thread'
+          name="thread"
           render={({ field }) => (
-            <FormItem className='flex gap-3 items-center w-full'>
+            <FormItem className="flex gap-3 items-center w-full">
               <FormLabel>
                 <Image
                   src={currentUserImg}
-                  alt='Profile Image'
+                  alt="Profile Image"
                   width={48}
                   height={48}
-                  className='rounded-full object-cover'
+                  className="rounded-full object-cover"
                 />
               </FormLabel>
-              <FormControl className='border-none bg-transparent'>
+              <FormControl className="border-none bg-transparent">
                 <Input
-                  type='text'
-                  placeholder='Comment..'
-                  className='no-focus text-light-1 outline-none'
+                  type="text"
+                  placeholder="Comment.."
+                  className="no-focus text-light-1 outline-none"
                   {...field}
                 />
               </FormControl>
             </FormItem>
           )}
         />
-        <Button type='submit' className='comment-form_btn'>
+        <Button type="submit" className="comment-form_btn">
           Reply
         </Button>
       </form>

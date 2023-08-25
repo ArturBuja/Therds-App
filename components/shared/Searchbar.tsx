@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 
-const Searchbat = ({ routeType }: { routeType: string }) => {
+const Searchbar = ({ routeType }: { routeType: string }) => {
   const router = useRouter();
   const [search, setSearch] = useState("");
 
@@ -42,4 +42,4 @@ const Searchbat = ({ routeType }: { routeType: string }) => {
   );
 };
 
-export default Searchbat;
+export default Searchbar;

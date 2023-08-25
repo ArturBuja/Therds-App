@@ -1,11 +1,15 @@
+import Image from "next/image";
+import { redirect } from "next/navigation";
+
+import { currentUser } from "@clerk/nextjs";
+
+import { profileTabs } from "@/constants";
+
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { profileTabs } from "@/constants";
+
 import { fetchUser } from "@/lib/actions/user.actions";
-import { currentUser } from "@clerk/nextjs";
-import Image from "next/image";
-import { redirect } from "next/navigation";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const user = await currentUser();
